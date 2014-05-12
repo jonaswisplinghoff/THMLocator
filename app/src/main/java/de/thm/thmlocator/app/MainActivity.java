@@ -7,6 +7,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.radiusnetworks.ibeacon.IBeacon;
 import com.radiusnetworks.ibeacon.IBeaconConsumer;
@@ -15,17 +16,38 @@ import com.radiusnetworks.ibeacon.MonitorNotifier;
 import com.radiusnetworks.ibeacon.RangeNotifier;
 import com.radiusnetworks.ibeacon.Region;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
+import de.thm.thmlocator.app.Entity.Room;
 
 
 public class MainActivity extends Activity implements IBeaconConsumer {
     protected static final String TAG = "MainActivity";
+    RoomListAdapter myListAdapter;
     IBeaconManager beaconManager = IBeaconManager.getInstanceForApplication(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ArrayList<Room> myRooms = new ArrayList<Room>();
+        Room first = new Room();
+        first.setEventName("First");
+        first.setRoomName("H01.01");
+
+        Room second = new Room();
+        second.setEventName("second");
+        second.setRoomName("H01.02");
+
+        myRooms.add(first);
+        myRooms.add(second);
+
+        myListAdapter = new RoomListAdapter(this, myRooms);
+
+        ListView myList = (ListView) findViewById(R.id.listViewRooms);
+        myList.setAdapter(myListAdapter);
 
         beaconManager.bind(this);
 

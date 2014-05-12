@@ -55,7 +55,7 @@ public class RoomListAdapter extends BaseAdapter {
         if(myList == null)
             return 0;
 
-        return ((Room) myList.get(position)).getid();
+        return position;
     }
 
     @Override
@@ -70,8 +70,8 @@ public class RoomListAdapter extends BaseAdapter {
 
         TextView titel, subTitel;
 
-        titel = (TextView) myActivity.findViewById(R.id.list_item_data_row_TextView_Titel);
-        subTitel = (TextView) myActivity.findViewById(R.id.list_item_data_row_TextView_SubTitel);
+        titel = (TextView) view.findViewById(R.id.list_item_data_row_TextView_Titel);
+        subTitel = (TextView) view.findViewById(R.id.list_item_data_row_TextView_SubTitel);
 
         titel.setText(item.getRoomName());
         subTitel.setText(item.getEventName());
