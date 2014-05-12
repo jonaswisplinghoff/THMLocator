@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -19,24 +20,37 @@ import de.thm.thmlocator.app.Entity.Room;
  */
 public class RoomListAdapter extends BaseAdapter {
 
-    protected List<Room> myList;
-    public RoomListAdapter (Context context, List<Room> items){
+    protected ArrayList<Room> myList;
+    public RoomListAdapter (Context context, ArrayList<Room> items){
         myList = items;
+
+        if(myList == null)
+            myList = new ArrayList<Room>();
      }
 
     @Override
     public int getCount() {
-        return 0;
+        if(myList == null)
+            return 0;
+
+        return myList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        if(myList == null)
+            return null;
+
+        return myList.get(position);
+
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        if(myList == null)
+            return 0;
+
+        return ((Room) myList.get(position)).getid();
     }
 
     @Override
