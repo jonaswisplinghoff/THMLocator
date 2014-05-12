@@ -6,6 +6,8 @@ import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,8 +23,11 @@ import de.thm.thmlocator.app.Entity.Room;
 public class RoomListAdapter extends BaseAdapter {
 
     protected ArrayList<Room> myList;
-    public RoomListAdapter (Context context, ArrayList<Room> items){
+    protected Activity myActivity;
+
+    public RoomListAdapter (Activity myActivity, ArrayList<Room> items){
         myList = items;
+        this.myActivity = myActivity;
 
         if(myList == null)
             myList = new ArrayList<Room>();
@@ -55,6 +60,22 @@ public class RoomListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        Room item = (Room) getItem(position);
+        View view = convertView;
+
+        if(view == null || !(view instanceof LinearLayout))
+        {
+            view = myActivity.getLayoutInflater().inflate(R.layout.row_item, parent, false);
+        }
+
+        TextView titel, subTitel;
+
+        titel = (TextView) myActivity.findViewById(R.id.list_item_data_row_TextView_Titel);
+        subTitel = (TextView) myActivity.findViewById(R.id.list_item_data_row_TextView_SubTitel);
+
+        titel.setText(item.getRoomName());
+        subTitel.setText(item.getEventName());
+
+        return view;
     }
 }
