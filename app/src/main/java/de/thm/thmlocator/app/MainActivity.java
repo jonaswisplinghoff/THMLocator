@@ -84,6 +84,7 @@ public class MainActivity extends Activity implements IBeaconConsumer {
 
         try {
             beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
+            beaconManager.startRangingBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
         } catch (RemoteException e) {   }
     }
 }
