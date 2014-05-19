@@ -13,5 +13,24 @@
         android:layout_height="wrap_content"
         android:id="@+id/listViewRooms"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/list_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:src="@drawable/logo_big"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 </RelativeLayout>

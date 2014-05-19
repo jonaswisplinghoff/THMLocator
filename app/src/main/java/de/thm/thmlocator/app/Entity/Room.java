@@ -5,7 +5,7 @@ package de.thm.thmlocator.app.Entity;
  */
 public class Room {
 
-    static int counter = 100;
+    static int counter = 1000;
     protected Integer id;
 
     protected String roomName;
@@ -14,7 +14,7 @@ public class Room {
 
     public Room()
     {
-        id = counter+5;
+        id = counter+1;
     }
 
     public Integer getid()

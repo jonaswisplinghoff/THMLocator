@@ -15,7 +15,7 @@ public class Detail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         TextView myLabel = (TextView) findViewById(R.id.textView2);
-       int roomId =  getIntent().getIntExtra(MainActivity.ROOM_ID, 1000);
+       int roomId =  getIntent().getIntExtra(MainActivity.ROOM_ID, 0);
         myLabel.setText("RoomID: "+ roomId);
 
     }

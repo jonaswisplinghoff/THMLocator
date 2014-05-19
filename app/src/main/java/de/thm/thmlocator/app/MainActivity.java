@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
         myListAdapter = new RoomListAdapter(this, myRooms);
 
         ListView myList = (ListView) findViewById(R.id.listViewRooms);
+        View emptyList = (View) findViewById(R.id.list_empty);
         myList.setAdapter(myListAdapter);
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -52,6 +53,16 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+        if(myListAdapter.getCount()>0)
+        {
+            myList.setVisibility(View.VISIBLE);
+            emptyList.setVisibility(View.GONE);
+        }else
+        {
+            myList.setVisibility(View.GONE);
+            emptyList.setVisibility(View.VISIBLE);
+
+        }
 
     }
 
