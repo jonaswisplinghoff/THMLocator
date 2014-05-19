@@ -5,11 +5,17 @@ package de.thm.thmlocator.app.Entity;
  */
 public class Room {
 
+    static int counter = 100;
     protected Integer id;
 
     protected String roomName;
 
     protected String eventName;
+
+    public Room()
+    {
+        id = counter+5;
+    }
 
     public Integer getid()
        {

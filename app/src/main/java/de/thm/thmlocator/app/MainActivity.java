@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import de.thm.thmlocator.app.Entity.Room;
 public class MainActivity extends Activity {
     protected static final String TAG = "MainActivity";
     RoomListAdapter myListAdapter;
+    final static String BEACON_ID = "beacon.id";
+    final static String ROOM_ID = "room.id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,7 @@ public class MainActivity extends Activity {
 
         ArrayList<Room> myRooms = new ArrayList<Room>();
         Room first = new Room();
+
         first.setEventName("First");
         first.setRoomName("H01.01");
 
@@ -39,6 +44,15 @@ public class MainActivity extends Activity {
 
         ListView myList = (ListView) findViewById(R.id.listViewRooms);
         myList.setAdapter(myListAdapter);
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, Detail.class);
+                intent.putExtra(ROOM_ID, ((Room) MainActivity.this.myListAdapter.getItem(0)).getid());
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
