@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import de.thm.thmlocator.app.Entity.Event;
 import de.thm.thmlocator.app.Entity.Room;
 
 
@@ -26,7 +25,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startService(new Intent(this, BeaconService.class));
+        Intent startServiceIntent = new Intent(this, BeaconService.class);
+        startService(startServiceIntent);
 
         ArrayList<Room> myRooms = new ArrayList<Room>();
         Room first = new Room(0, 0, null, "H.01.01", null);

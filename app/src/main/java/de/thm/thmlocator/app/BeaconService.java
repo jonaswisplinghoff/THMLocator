@@ -21,6 +21,8 @@ import java.util.Collection;
 public class BeaconService extends Service implements IBeaconConsumer {
 
     protected static final String TAG = "BeaconService";
+    protected static final String BEACON_ID = "THMBeacon";
+    protected static final String BEACON_UUID = "9DEFDC97-38DB-4FE3-A7C1-45BCE2A27A87";
     private IBeaconManager beaconManager;
 
     @Override
@@ -59,11 +61,21 @@ public class BeaconService extends Service implements IBeaconConsumer {
             @Override
             public void didEnterRegion(Region region) {
                 Log.i(TAG, "I just saw an iBeacon for the first time!");
+                try {
+                    beaconManager.startRangingBeaconsInRegion(new Region(BEACON_ID, BEACON_UUID , null, null));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void didExitRegion(Region region) {
                 Log.i(TAG, "I no longer see an iBeacon");
+                try {
+                    beaconManager.stopRangingBeaconsInRegion(new Region(BEACON_ID, BEACON_UUID, null, null));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -88,7 +100,6 @@ public class BeaconService extends Service implements IBeaconConsumer {
 
         try {
             beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
-            beaconManager.startRangingBeaconsInRegion(new Region(getString(R.string.uuid),null , null, null));
         } catch (RemoteException e) {   }
     }
 }
