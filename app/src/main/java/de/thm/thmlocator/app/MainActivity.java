@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, Detail.class);
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 intent.putExtra(ROOM_ID, ((Room) MainActivity.this.myListAdapter.getItem(0)).getid());
                 startActivity(intent);
             }

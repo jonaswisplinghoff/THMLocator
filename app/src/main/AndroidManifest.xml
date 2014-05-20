@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="de.thm.thmlocator.app.Detail"
+            android:name=".DetailActivity"
             android:label="@string/title_activity_detail" >
         </activity>
     </application>
