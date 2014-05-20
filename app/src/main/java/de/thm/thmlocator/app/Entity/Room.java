@@ -61,11 +61,13 @@ public class Room {
     }
 
 
-    public Event getEventbyTime(Date actualTime){
+    public Event getEventByTime(Date actualTime){
         Event result = null;
-        for(Event e : roomEvents) {
-            if(isWithinRange(actualTime, e.getStartDate(), e.getEndDate())){
-                result = e;
+        if(roomEvents != null){
+            for(Event e : roomEvents) {
+                if(isWithinRange(actualTime, e.getStartDate(), e.getEndDate())){
+                    result = e;
+                }
             }
         }
         return result;

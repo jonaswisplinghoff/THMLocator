@@ -1,8 +1,6 @@
 package de.thm.thmlocator.app;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,11 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.Date;
 
+import de.thm.thmlocator.app.Entity.Event;
 import de.thm.thmlocator.app.Entity.Room;
 
 /**
@@ -60,7 +56,7 @@ public class RoomListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Room item = (Room) getItem(position);
+        Room room = (Room) getItem(position);
         View view = convertView;
 
         if(view == null || !(view instanceof LinearLayout))
@@ -73,8 +69,17 @@ public class RoomListAdapter extends BaseAdapter {
         titel = (TextView) view.findViewById(R.id.list_item_data_row_TextView_Titel);
         subTitel = (TextView) view.findViewById(R.id.list_item_data_row_TextView_SubTitel);
 
-        titel.setText(item.getRoomName());
-        subTitel.setText(item.getEventName());
+        titel.setText(room.getRoomName());
+
+        Event event = room.getEventByTime(new Date());
+        
+        if(event != null){
+            subTitel.setText(event.getEventName());
+        }
+        else{
+            subTitel.setText(myActivity.getString(R.string.currentlyNoEvent));
+        }
+        
 
         return view;
     }

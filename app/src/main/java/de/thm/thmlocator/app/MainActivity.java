@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import de.thm.thmlocator.app.Entity.Event;
 import de.thm.thmlocator.app.Entity.Room;
 
 
@@ -28,15 +29,8 @@ public class MainActivity extends Activity {
         startService(new Intent(this, BeaconService.class));
 
         ArrayList<Room> myRooms = new ArrayList<Room>();
-        Room first = new Room();
-
-        first.setEventName("First");
-        first.setRoomName("H01.01");
-
-        Room second = new Room();
-        second.setEventName("second");
-        second.setRoomName("H01.02");
-
+        Room first = new Room(0, 0, null, "H.01.01", null);
+        Room second = new Room(1, 1, null, "H.01.02", null);
         myRooms.add(first);
         myRooms.add(second);
 
@@ -49,7 +43,7 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra(ROOM_ID, ((Room) MainActivity.this.myListAdapter.getItem(0)).getid());
+                intent.putExtra(ROOM_ID, ((Room) MainActivity.this.myListAdapter.getItem(0)).getId());
                 startActivity(intent);
             }
         });
