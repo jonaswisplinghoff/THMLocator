@@ -3,11 +3,8 @@ package de.thm.thmlocator.app.Entity;
 /**
  * Created by robinwiegand on 19.05.14.
  */
-import java.util.ArrayList;
-import java.util.Date;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import java.util.Date;
 
 public class Event {
 

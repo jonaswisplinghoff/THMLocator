@@ -2,6 +2,7 @@ package de.thm.thmlocator.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,20 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Beim ersten Launch Testdaten erstellen
+        //--------------------------------------
+        boolean firstStart = false;
+        SharedPreferences settings = getSharedPreferences("PREFS_NAME", 0);
+        firstStart = settings.getBoolean("FIRST_RUN", false);
+        if (!firstStart) {
+            DataManager.createTestData(this);
+            settings = getSharedPreferences("PREFS_NAME", 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("FIRST_RUN", true);
+            editor.commit();
+        }
+        //--------------------------------------
 
         Intent startServiceIntent = new Intent(this, BeaconService.class);
         startService(startServiceIntent);

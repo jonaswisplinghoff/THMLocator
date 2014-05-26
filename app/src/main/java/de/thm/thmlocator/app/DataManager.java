@@ -3,22 +3,35 @@ package de.thm.thmlocator.app;
 /**
  * Created by robinwiegand on 19.05.14.
  */
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import de.thm.thmlocator.app.Entity.Event;
 import de.thm.thmlocator.app.Entity.Room;
 
 
 public class DataManager {
     private static String filename = "res/raw/rooms.fmi";
-    FileInputStream fis;
-    FileOutputStream fileout;
+    private static FileInputStream fis;
+    private static FileOutputStream fileout;
 
-    public Room getRoomByID(int id){
+    public static Room getRoomByID(int id){
         ArrayList<Room> rooms = new ArrayList<Room>();
         rooms = getRooms();
         Room result = null;
@@ -33,7 +46,7 @@ public class DataManager {
     }
 
     //Daten von der SD-Karte lesen
-    private ArrayList<Room> getRooms(){
+    private static ArrayList<Room> getRooms(){
         ArrayList<Room> result = new ArrayList<Room>();
         File file = new File(filename);
         try{
@@ -49,7 +62,7 @@ public class DataManager {
     }
 
     //Daten abspeichern
-    private boolean setRooms(ArrayList<Room> rooms){
+    private static boolean setRooms(ArrayList<Room> rooms){
         boolean result;
         try
         {
@@ -72,6 +85,32 @@ public class DataManager {
         }
 
         return result;
+    }
+
+
+    public static void createTestData(Context ctxt){
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        ArrayList<Event> events = new ArrayList<Event>();
+
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = formatter.parse("02/06/2014 14:00");
+            endDate = formatter.parse("02/06/2014 16:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Event e1 = new Event("FMI", "Prof. Dr. Dominik Schultes", startDate, endDate, 120, "www.arsnovatabak.de", "Vorlesung", "Medieninformatik M. Sc.");
+        events.add(e1);
+
+        Bitmap testBild = BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.raum_test);
+        Room r1 = new Room(1, 1234, testBild, "H001", events);
+
+        rooms.add(r1);
+
+        setRooms(rooms);
     }
 }
 

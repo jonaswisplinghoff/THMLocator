@@ -3,9 +3,12 @@ package de.thm.thmlocator.app.Entity;
 /**
  * Created by atabaksahraei on 12.05.14.
  */
+
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 import java.util.ArrayList;
 import java.util.Date;
-import android.graphics.drawable.Drawable;
 
 public class Room {
 
@@ -13,11 +16,11 @@ public class Room {
 
     private int id;
     private int beaconID;
-    private Drawable roomPicture;
+    private Bitmap roomPicture;
     private String roomName;
     private ArrayList<Event> roomEvents;
 
-    public Room(int id, int beaconID, Drawable roomPicture, String roomName,
+    public Room(int id, int beaconID, Bitmap roomPicture, String roomName,
                 ArrayList<Event> roomEvents) {
         super();
         this.id = id;
@@ -33,10 +36,10 @@ public class Room {
     public void setId(int id) {
         this.id = id;
     }
-    public Drawable getRoomPicture() {
+    public Bitmap getRoomPicture() {
         return roomPicture;
     }
-    public void setRoomPicture(Drawable roomPicture) {
+    public void setRoomPicture(Bitmap roomPicture) {
         this.roomPicture = roomPicture;
     }
     public String getRoomName() {
