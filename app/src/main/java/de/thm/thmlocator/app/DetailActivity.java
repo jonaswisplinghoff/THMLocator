@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.thm.thmlocator.app.Entity.Room;
+
 
 public class DetailActivity extends Activity {
+    Room myRoom;
     TextView roomName;
     ImageView teacher;
 
@@ -22,23 +25,24 @@ public class DetailActivity extends Activity {
         roomName = (TextView) findViewById(R.id.textViewRoomName);
         teacher = (ImageView) findViewById(R.id.imageButtonTeacher);
 
-       int roomId =  getIntent().getIntExtra(MainActivity.ROOM_ID, 0);
+        int roomId =  getIntent().getIntExtra(MainActivity.ROOM_ID, 0);
 
+        myRoom = DataManager.getRoomByID(roomId);
 
-        roomName.setText("RoomID: " + roomId);
+        if(myRoom != null) {
 
-
-        teacher.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(b)
-                {
-                    view.setBackground(getResources().getDrawable(R.drawable.teacher_click));
-                }else{
-                    view.setBackground(getResources().getDrawable(R.drawable.teacher));
+            roomName.setText(roomId);
+            teacher.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (b) {
+                        view.setBackground(getResources().getDrawable(R.drawable.teacher_click));
+                    } else {
+                        view.setBackground(getResources().getDrawable(R.drawable.teacher));
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 
