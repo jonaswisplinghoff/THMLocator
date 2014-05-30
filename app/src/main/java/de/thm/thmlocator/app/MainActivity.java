@@ -4,18 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.radiusnetworks.ibeacon.IBeacon;
+
 import java.util.ArrayList;
+import java.util.Collection;
 
 import de.thm.thmlocator.app.Entity.Room;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements IBeaconView {
     protected static final String TAG = "MainActivity";
     RoomListAdapter myListAdapter;
     final static String BEACON_ID = "beacon.id";
@@ -25,7 +29,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        DataManager.registForBeaconListChanges(this);
         //Beim ersten Launch Testdaten erstellen
         //--------------------------------------
         boolean firstStart = false;
@@ -43,35 +47,6 @@ public class MainActivity extends Activity {
         Intent startServiceIntent = new Intent(this, BeaconService.class);
         startService(startServiceIntent);
 
-        ArrayList<Room> myRooms = new ArrayList<Room>();
-        Room first = new Room(0, 0, null, "H.01.01", null);
-        Room second = new Room(1, 1, null, "H.01.02", null);
-        myRooms.add(first);
-        myRooms.add(second);
-
-        myListAdapter = new RoomListAdapter(this, myRooms);
-
-        ListView myList = (ListView) findViewById(R.id.listViewRooms);
-        View emptyList = (View) findViewById(R.id.list_empty);
-        myList.setAdapter(myListAdapter);
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra(ROOM_ID, ((Room) MainActivity.this.myListAdapter.getItem(0)).getId());
-                startActivity(intent);
-            }
-        });
-        if(myListAdapter.getCount()>0)
-        {
-            myList.setVisibility(View.VISIBLE);
-            emptyList.setVisibility(View.GONE);
-        }else
-        {
-            myList.setVisibility(View.GONE);
-            emptyList.setVisibility(View.VISIBLE);
-
-        }
 
     }
 
@@ -100,4 +75,40 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void updateBeaconList(Collection<IBeacon> iBeacons) {
+        Log.d(TAG, "COLLECTION_SIZE: "+iBeacons.size());
+        ArrayList<Room> myRooms = new ArrayList<Room>();
+        for (IBeacon beacon : iBeacons) {
+            Room room = new Room(0, 0, null, beacon.getBluetoothAddress(), null);
+            myRooms.add(room);
+        }
+        Log.d(TAG, "SIZE: "+myRooms.size());
+        myListAdapter = new RoomListAdapter(this, myRooms);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ListView myList = (ListView) findViewById(R.id.listViewRooms);
+                View emptyList = (View) findViewById(R.id.list_empty);
+                myList.setAdapter(myListAdapter);
+                myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                        intent.putExtra(ROOM_ID, ((Room) MainActivity.this.myListAdapter.getItem(0)).getId());
+                        startActivity(intent);
+                    }
+                });
+                if (myListAdapter.getCount() > 0) {
+                    myList.setVisibility(View.VISIBLE);
+                    emptyList.setVisibility(View.GONE);
+                } else {
+                    myList.setVisibility(View.GONE);
+                    emptyList.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+
+    }
 }

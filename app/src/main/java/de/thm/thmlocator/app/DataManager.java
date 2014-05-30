@@ -4,10 +4,13 @@ package de.thm.thmlocator.app;
  * Created by robinwiegand on 19.05.14.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+
+import com.radiusnetworks.ibeacon.IBeacon;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 import de.thm.thmlocator.app.Entity.Event;
@@ -27,9 +31,23 @@ import de.thm.thmlocator.app.Entity.Room;
 
 
 public class DataManager {
+    private static IBeaconView myCurrentbeaconView;
     private static String filename = "res/raw/rooms.fmi";
     private static FileInputStream fis;
     private static FileOutputStream fileout;
+
+    public static void registForBeaconListChanges(IBeaconView beaconView)
+    {
+        myCurrentbeaconView = beaconView;
+    }
+
+    public static void NotifyBeacons(Collection<IBeacon> beacons)
+    {
+        if(myCurrentbeaconView != null)
+        {
+            myCurrentbeaconView.updateBeaconList(beacons);
+        }
+    }
 
     public static Room getRoomByID(int id){
         ArrayList<Room> rooms = new ArrayList<Room>();
