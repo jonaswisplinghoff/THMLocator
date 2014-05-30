@@ -4,18 +4,41 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 public class DetailActivity extends Activity {
+    TextView roomName;
+    ImageView teacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        TextView myLabel = (TextView) findViewById(R.id.textView2);
+
+        //Get Views from runtime
+        roomName = (TextView) findViewById(R.id.textViewRoomName);
+        teacher = (ImageView) findViewById(R.id.imageButtonTeacher);
+
        int roomId =  getIntent().getIntExtra(MainActivity.ROOM_ID, 0);
-        myLabel.setText("RoomID: "+ roomId);
+
+
+        roomName.setText("RoomID: " + roomId);
+
+
+        teacher.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                {
+                    view.setBackground(getResources().getDrawable(R.drawable.teacher_click));
+                }else{
+                    view.setBackground(getResources().getDrawable(R.drawable.teacher));
+                }
+            }
+        });
 
     }
 

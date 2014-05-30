@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="false"
             android:layout_alignParentTop="false"
-            android:src="@drawable/logo_big"
+            android:src="@drawable/logo"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 </RelativeLayout>
