@@ -21,7 +21,7 @@ import de.thm.thmlocator.app.Entity.Room;
 
 public class MainActivity extends Activity implements IBeaconView {
     protected static final String TAG = "MainActivity";
-    RoomListAdapter myListAdapter;
+    BeaconListAdapter myListAdapter;
     final static String BEACON_ID = "beacon.id";
     final static String ROOM_ID = "room.id";
 
@@ -84,7 +84,7 @@ public class MainActivity extends Activity implements IBeaconView {
             myRooms.add(room);
         }
         Log.d(TAG, "SIZE: "+myRooms.size());
-        myListAdapter = new RoomListAdapter(this, myRooms);
+        myListAdapter = new BeaconListAdapter(this, iBeacons);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -95,7 +95,9 @@ public class MainActivity extends Activity implements IBeaconView {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                        intent.putExtra(ROOM_ID, ((Room) MainActivity.this.myListAdapter.getItem(0)).getId());
+                        IBeacon beacon = (IBeacon) MainActivity.this.myListAdapter.getItem(0);
+
+                        intent.putExtra(ROOM_ID, (DataManager.getRoomByBeaconID(beacon.getMinor()).getId()));
                         startActivity(intent);
                     }
                 });

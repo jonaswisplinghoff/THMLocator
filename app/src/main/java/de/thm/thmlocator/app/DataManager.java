@@ -63,6 +63,21 @@ public class DataManager {
         return result;
     }
 
+    public static Room getRoomByBeaconID(int beaconId){
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        rooms = getRooms();
+        Room result = null;
+
+        for(Room r : rooms){
+            if(r.getBeaconID() == beaconId){
+                result = r;
+            }
+        }
+
+        return result;
+    }
+
+
     //Daten von der SD-Karte lesen
     private static ArrayList<Room> getRooms(){
         ArrayList<Room> result = new ArrayList<Room>();
@@ -124,7 +139,7 @@ public class DataManager {
         events.add(e1);
 
         Bitmap testBild = BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.raum_test);
-        Room r1 = new Room(1, 1234, testBild, "H001", events);
+        Room r1 = new Room(1, 1, testBild, "H001", events);
 
         rooms.add(r1);
 
