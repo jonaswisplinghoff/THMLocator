@@ -88,12 +88,12 @@ public class BeaconService extends Service implements IBeaconConsumer {
         beaconManager.setRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<IBeacon> iBeacons, Region region) {
-                Log.d(TAG, "SIZE: "+iBeacons.size());
-                DataManager.NotifyBeacons(iBeacons);
-                if(iBeacons.isEmpty()) {
-                    Log.i(TAG, "Beacon not Found!");
-                    return;
+
+                for(IBeacon beacon: iBeacons){
+                    Log.d(TAG, "Beacon found: " + beacon.getMajor() + ":" + beacon.getMinor());
                 }
+
+                DataManager.NotifyBeacons(iBeacons);
 
                // Log.i(TAG, "The first iBeacon I see is about "+iBeacons.iterator().next().getAccuracy()+" meters away. : "+iBeacons.iterator().next().getProximityUuid());
 
