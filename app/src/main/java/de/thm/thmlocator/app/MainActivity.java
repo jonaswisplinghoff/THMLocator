@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.radiusnetworks.ibeacon.IBeacon;
 
@@ -95,12 +96,17 @@ public class MainActivity extends Activity implements IBeaconView {
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                        IBeacon beacon = (IBeacon) MainActivity.this.myListAdapter.getItem(0);
+                        IBeacon beacon = (IBeacon) MainActivity.this.myListAdapter.getItem(i);
 
-
-                        intent.putExtra(ROOM_ID, (DataManager.getRoomByBeaconID(beacon.getMinor()).getId()));
-                        startActivity(intent);
+                        if(DataManager.getRoomByBeaconID(beacon.getMinor()) == null)
+                        {
+                            Toast.makeText(MainActivity.this, "Keine Daten in der Datenbank enthalten!", Toast.LENGTH_SHORT).show();
+                        }else {
+                            intent.putExtra(ROOM_ID, (DataManager.getRoomByBeaconID(beacon.getMinor()).getId()));
+                            startActivity(intent);
+                        }
                     }
                 });
                 if (myListAdapter.getCount() > 0) {

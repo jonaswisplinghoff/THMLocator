@@ -70,16 +70,12 @@ public class BeaconListAdapter extends BaseAdapter {
         }
 
         TextView titel, subTitel;
-        ImageView circle;
+        ImageView circle, arrow;
 
         titel = (TextView) view.findViewById(R.id.list_item_data_row_TextView_Titel);
         subTitel = (TextView) view.findViewById(R.id.list_item_data_row_TextView_SubTitel);
         circle = (ImageView) view.findViewById(R.id.list_item_data_row_ImageView_Icon);
-
-        //titel.setText(room.getRoomName());
-        titel.setText("Beacon " + beacon.getMinor());
-        subTitel.setText("Proximity: " + beacon.getAccuracy());
-
+        arrow = (ImageView) view.findViewById(R.id.list_item_data_row_ImageView_next);
 
         if(beacon.getAccuracy() >= 1.0)
         {
@@ -92,35 +88,22 @@ public class BeaconListAdapter extends BaseAdapter {
         }
 
 
-      /*  switch (beacon.getProximity())
-        {
-            case IBeacon.PROXIMITY_IMMEDIATE:
-                circle.setAlpha((float) 1.0);
-                break;
+        if(room != null) {
+            titel.setText(room.getRoomName());
+            arrow.setVisibility(View.VISIBLE);
 
-            case IBeacon.PROXIMITY_NEAR:
-                circle.setAlpha((float) 0.4);
-                break;
+            Event event = room.getEventByTime(new Date());
 
-            case IBeacon.PROXIMITY_FAR:
-                circle.setAlpha((float) 0.2);
-                break;
-
-            default:
-                circle.setAlpha((float) 0.0);
-                break;
-
-        }*/
-
-        /*Event event = room.getEventByTime(new Date());
-        
-        if(event != null){
-            subTitel.setText(event.getEventName());
+            if (event != null) {
+                subTitel.setText(event.getEventName());
+            } else {
+                subTitel.setText(myActivity.getString(R.string.currentlyNoEvent));
+            }
+        }else{
+            titel.setText("Beacon " + beacon.getMinor());
+            subTitel.setText("Proximity: " + beacon.getAccuracy());
+            arrow.setVisibility(View.INVISIBLE);
         }
-        else{
-            subTitel.setText(myActivity.getString(R.string.currentlyNoEvent));
-        }*/
-        
 
         return view;
     }
