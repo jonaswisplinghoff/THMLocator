@@ -9,8 +9,9 @@ import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.io.Serializable;
 
-public class Room {
+public class Room implements Serializable {
 
 
 
@@ -20,12 +21,12 @@ public class Room {
     private String roomName;
     private ArrayList<Event> roomEvents;
 
-    public Room(int id, int beaconID, Bitmap roomPicture, String roomName,
+    public Room(int id, int beaconID,  String roomName,
                 ArrayList<Event> roomEvents) {
         super();
         this.id = id;
         this.beaconID = beaconID;
-        this.roomPicture = roomPicture;
+        //this.roomPicture = roomPicture;
         this.roomName = roomName;
         this.roomEvents = roomEvents;
     }

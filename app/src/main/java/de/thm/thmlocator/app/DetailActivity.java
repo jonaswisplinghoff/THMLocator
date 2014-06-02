@@ -31,7 +31,7 @@ public class DetailActivity extends Activity {
 
         if(myRoom != null) {
 
-            roomName.setText(roomId);
+            roomName.setText(myRoom.getRoomName());
             teacher.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {

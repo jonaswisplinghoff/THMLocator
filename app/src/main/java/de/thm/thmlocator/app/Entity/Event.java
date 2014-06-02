@@ -5,8 +5,9 @@ package de.thm.thmlocator.app.Entity;
  */
 
 import java.util.Date;
+import java.io.Serializable;
 
-public class Event {
+public class Event implements Serializable {
 
 
     private String eventName;

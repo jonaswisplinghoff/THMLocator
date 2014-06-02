@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 
 import com.radiusnetworks.ibeacon.IBeacon;
 
@@ -32,7 +33,7 @@ import de.thm.thmlocator.app.Entity.Room;
 
 public class DataManager {
     private static IBeaconView myCurrentbeaconView;
-    private static String filename = "res/raw/rooms.fmi";
+    private static String filename = Environment.getExternalStorageDirectory().toString() +  "/rooms.fmi";
     private static FileInputStream fis;
     private static FileOutputStream fileout;
 
@@ -138,8 +139,8 @@ public class DataManager {
         Event e1 = new Event("FMI", "Prof. Dr. Dominik Schultes", startDate, endDate, 120, "www.arsnovatabak.de", "Vorlesung", "Medieninformatik M. Sc.");
         events.add(e1);
 
-        Bitmap testBild = BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.raum_test);
-        Room r1 = new Room(1, 1, testBild, "H001", events);
+        //Bitmap testBild = BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.raum_test);
+        Room r1 = new Room(1, 1, "H001", events);
 
         rooms.add(r1);
 

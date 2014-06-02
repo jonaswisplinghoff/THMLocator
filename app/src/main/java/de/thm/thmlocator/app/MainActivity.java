@@ -33,6 +33,7 @@ public class MainActivity extends Activity implements IBeaconView {
         //Beim ersten Launch Testdaten erstellen
         //--------------------------------------
         boolean firstStart = false;
+        DataManager.createTestData(this);
         SharedPreferences settings = getSharedPreferences("PREFS_NAME", 0);
         firstStart = settings.getBoolean("FIRST_RUN", false);
         if (!firstStart) {
@@ -80,7 +81,7 @@ public class MainActivity extends Activity implements IBeaconView {
         Log.d(TAG, "COLLECTION_SIZE: "+iBeacons.size());
         ArrayList<Room> myRooms = new ArrayList<Room>();
         for (IBeacon beacon : iBeacons) {
-            Room room = new Room(0, 0, null, beacon.getBluetoothAddress(), null);
+            Room room = new Room(0, 0, beacon.getBluetoothAddress(), null);
             myRooms.add(room);
         }
         Log.d(TAG, "SIZE: "+myRooms.size());
@@ -96,6 +97,7 @@ public class MainActivity extends Activity implements IBeaconView {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                         IBeacon beacon = (IBeacon) MainActivity.this.myListAdapter.getItem(0);
+
 
                         intent.putExtra(ROOM_ID, (DataManager.getRoomByBeaconID(beacon.getMinor()).getId()));
                         startActivity(intent);
