@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -69,13 +70,47 @@ public class BeaconListAdapter extends BaseAdapter {
         }
 
         TextView titel, subTitel;
+        ImageView circle;
 
         titel = (TextView) view.findViewById(R.id.list_item_data_row_TextView_Titel);
         subTitel = (TextView) view.findViewById(R.id.list_item_data_row_TextView_SubTitel);
+        circle = (ImageView) view.findViewById(R.id.list_item_data_row_ImageView_Icon);
 
         //titel.setText(room.getRoomName());
         titel.setText("Beacon " + beacon.getMinor());
         subTitel.setText("Proximity: " + beacon.getAccuracy());
+
+
+        if(beacon.getAccuracy() >= 1.0)
+        {
+            circle.setAlpha((float) 0.1);
+        }else if(beacon.getAccuracy() >= 0.5 )
+        {
+            circle.setAlpha((float) 0.4);
+        }else {
+            circle.setAlpha((float) 1.0);
+        }
+
+
+      /*  switch (beacon.getProximity())
+        {
+            case IBeacon.PROXIMITY_IMMEDIATE:
+                circle.setAlpha((float) 1.0);
+                break;
+
+            case IBeacon.PROXIMITY_NEAR:
+                circle.setAlpha((float) 0.4);
+                break;
+
+            case IBeacon.PROXIMITY_FAR:
+                circle.setAlpha((float) 0.2);
+                break;
+
+            default:
+                circle.setAlpha((float) 0.0);
+                break;
+
+        }*/
 
         /*Event event = room.getEventByTime(new Date());
         
