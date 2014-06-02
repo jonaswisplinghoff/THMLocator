@@ -101,7 +101,7 @@ public class BeaconService extends Service implements IBeaconConsumer {
         });
 
         try {
-            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
+            beaconManager.startMonitoringBeaconsInRegion(new Region(BEACON_ID, BEACON_UUID, null, null));
         } catch (RemoteException e) {   }
     }
 }
