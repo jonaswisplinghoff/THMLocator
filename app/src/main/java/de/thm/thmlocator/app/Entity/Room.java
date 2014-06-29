@@ -74,6 +74,10 @@ public class Room implements Serializable {
                 }
             }
         }
+
+        if(result==null){
+            result = new Event("Keine Veranstaltung", "", new Date(), new Date(), 0, "", "", "");
+        }
         return result;
     }
 

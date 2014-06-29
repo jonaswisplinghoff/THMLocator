@@ -33,23 +33,19 @@ public class MainActivity extends Activity implements IBeaconView {
         DataManager.registForBeaconListChanges(this);
         //Beim ersten Launch Testdaten erstellen
         //--------------------------------------
-        boolean firstStart = false;
-        DataManager.createTestData(this);
+        boolean firstStart = true;
         SharedPreferences settings = getSharedPreferences("PREFS_NAME", 0);
-        firstStart = settings.getBoolean("FIRST_RUN", false);
-        if (!firstStart) {
+        firstStart = settings.getBoolean("FIRST_RUN", true);
+        if (firstStart) {
             DataManager.createTestData(this);
-            settings = getSharedPreferences("PREFS_NAME", 0);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("FIRST_RUN", true);
-            editor.commit();
+            editor.putBoolean("FIRST_RUN", false);
+            editor.apply();
         }
         //--------------------------------------
 
         Intent startServiceIntent = new Intent(this, BeaconService.class);
         startService(startServiceIntent);
-
-
     }
 
     @Override
