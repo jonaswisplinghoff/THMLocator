@@ -10,18 +10,17 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Room implements Serializable {
 
-
-
     private int id;
-    private int beaconID;
+    private UUID beaconID;
     private Bitmap roomPicture;
     private String roomName;
     private ArrayList<Event> roomEvents;
 
-    public Room(int id, int beaconID,  String roomName,
+    public Room(int id, UUID beaconID,  String roomName,
                 ArrayList<Event> roomEvents) {
         super();
         this.id = id;
@@ -57,10 +56,10 @@ public class Room implements Serializable {
         this.roomEvents = roomEvents;
     }
 
-    public int getBeaconID() {
+    public UUID getBeaconID() {
         return beaconID;
     }
-    public void setBeaconID(int beaconID) {
+    public void setBeaconID(UUID beaconID) {
         this.beaconID = beaconID;
     }
 
@@ -84,6 +83,4 @@ public class Room implements Serializable {
     public boolean isWithinRange(Date testDate, Date startDate, Date endDate) {
         return !(testDate.before(startDate) || testDate.after(endDate));
     }
-
 }
-

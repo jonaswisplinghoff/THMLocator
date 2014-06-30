@@ -13,6 +13,7 @@ import com.radiusnetworks.ibeacon.IBeacon;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 
 import de.thm.thmlocator.app.Entity.Event;
 import de.thm.thmlocator.app.Entity.Room;
@@ -61,7 +62,7 @@ public class BeaconListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         IBeacon beacon = (IBeacon) getItem(position);
-        Room room = DataManager.getRoomByBeaconID(beacon.getMinor());
+        Room room = DataManager.getRoomByBeaconID(UUID.fromString(beacon.getProximityUuid()));
         View view = convertView;
 
         if(view == null || !(view instanceof LinearLayout))

@@ -16,6 +16,7 @@ import com.radiusnetworks.ibeacon.IBeacon;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import de.thm.thmlocator.app.Entity.Room;
 
@@ -33,7 +34,7 @@ public class MainActivity extends Activity implements IBeaconView {
         DataManager.registForBeaconListChanges(this);
         //Beim ersten Launch Testdaten erstellen
         //--------------------------------------
-        boolean firstStart = true;
+        boolean firstStart;
         SharedPreferences settings = getSharedPreferences("PREFS_NAME", 0);
         firstStart = settings.getBoolean("FIRST_RUN", true);
         if (firstStart) {
@@ -76,12 +77,7 @@ public class MainActivity extends Activity implements IBeaconView {
     @Override
     public void updateBeaconList(Collection<IBeacon> iBeacons) {
         Log.d(TAG, "COLLECTION_SIZE: "+iBeacons.size());
-        ArrayList<Room> myRooms = new ArrayList<Room>();
-        for (IBeacon beacon : iBeacons) {
-            Room room = new Room(0, 0, beacon.getBluetoothAddress(), null);
-            myRooms.add(room);
-        }
-        Log.d(TAG, "SIZE: "+myRooms.size());
+
         myListAdapter = new BeaconListAdapter(this, iBeacons);
         runOnUiThread(new Runnable() {
             @Override
@@ -96,11 +92,11 @@ public class MainActivity extends Activity implements IBeaconView {
                         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                         IBeacon beacon = (IBeacon) MainActivity.this.myListAdapter.getItem(i);
 
-                        if(DataManager.getRoomByBeaconID(beacon.getMinor()) == null)
+                        if(DataManager.getRoomByBeaconID(UUID.fromString(beacon.getProximityUuid())) == null)
                         {
                             Toast.makeText(MainActivity.this, "Keine Daten in der Datenbank enthalten!", Toast.LENGTH_SHORT).show();
                         }else {
-                            intent.putExtra(ROOM_ID, (DataManager.getRoomByBeaconID(beacon.getMinor()).getId()));
+                            intent.putExtra(ROOM_ID, (DataManager.getRoomByBeaconID(UUID.fromString(beacon.getProximityUuid())).getId()));
                             startActivity(intent);
                         }
                     }

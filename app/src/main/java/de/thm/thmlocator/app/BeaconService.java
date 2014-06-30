@@ -18,6 +18,7 @@ import com.radiusnetworks.ibeacon.Region;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 
 import de.thm.thmlocator.app.Entity.Room;
 
@@ -28,8 +29,6 @@ public class BeaconService extends Service implements IBeaconConsumer {
 
     protected static final String TAG = "BeaconService";
     protected static final String BEACON_ID = "THMBeacon";
-    protected static final String BEACON_UUID = "9DEFDC97-38DB-4FE3-A7C1-45BCE2A27A87";
-    protected static final String EXTRA_ROOM_ID = "notification_extra_room_id";
 
     private IBeaconManager beaconManager;
 
@@ -39,6 +38,7 @@ public class BeaconService extends Service implements IBeaconConsumer {
 
         beaconManager = IBeaconManager.getInstanceForApplication(this);
         beaconManager.bind(this);
+
     }
 
     @Override
@@ -57,8 +57,6 @@ public class BeaconService extends Service implements IBeaconConsumer {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.i(TAG, "Started BeaconService from "+intent.toString());
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -71,7 +69,7 @@ public class BeaconService extends Service implements IBeaconConsumer {
             public void didEnterRegion(Region region) {
                 Log.i(TAG, "I just saw an iBeacon for the first time!");
                 try {
-                    beaconManager.startRangingBeaconsInRegion(new Region(BEACON_ID, BEACON_UUID , null, null));
+                    beaconManager.startRangingBeaconsInRegion(new Region(BEACON_ID, null , null, null));
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -81,7 +79,7 @@ public class BeaconService extends Service implements IBeaconConsumer {
             public void didExitRegion(Region region) {
                 Log.i(TAG, "I no longer see an iBeacon");
                 try {
-                    beaconManager.stopRangingBeaconsInRegion(new Region(BEACON_ID, BEACON_UUID, null, null));
+                    beaconManager.stopRangingBeaconsInRegion(new Region(BEACON_ID, null, null, null));
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -97,24 +95,28 @@ public class BeaconService extends Service implements IBeaconConsumer {
             @Override
             public void didRangeBeaconsInRegion(Collection<IBeacon> iBeacons, Region region) {
 
-                for(IBeacon beacon: iBeacons){
-                    Log.d(TAG, "Beacon found: " + beacon.getMajor() + ":" + beacon.getMinor());
+                if(iBeacons.size()>0){
+
+                    for(IBeacon beacon: iBeacons){
+                        Log.d(TAG, "Beacon found: " + beacon.getMajor() + ":" + beacon.getMinor());
+                    }
+
+                    DataManager.NotifyBeacons(iBeacons);
+
+                    IBeacon closest = iBeacons.iterator().next();
+                    if(closest.getProximity()==IBeacon.PROXIMITY_IMMEDIATE){
+                        sendNotification(UUID.fromString(closest.getProximityUuid()));
+                    }
                 }
-
-                DataManager.NotifyBeacons(iBeacons);
-                sendNotification(iBeacons.iterator().next().getMinor());
-
             }
         });
 
         try {
-            beaconManager.startMonitoringBeaconsInRegion(new Region(BEACON_ID, BEACON_UUID, null, null));
+            beaconManager.startMonitoringBeaconsInRegion(new Region(BEACON_ID, null, null, null));
         } catch (RemoteException e) {   }
     }
 
-    public void sendNotification(int beaconId){
-
-
+    public void sendNotification(UUID beaconId){
         Room currentRoom = DataManager.getRoomByBeaconID(beaconId);
 
         if(currentRoom != null){
@@ -124,8 +126,11 @@ public class BeaconService extends Service implements IBeaconConsumer {
 
             // Build intent for notification content
             Intent viewIntent = new Intent(this, DetailActivity.class);
-            viewIntent.putExtra(EXTRA_ROOM_ID, beaconId);
-            PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, 0);
+            Room room = DataManager.getRoomByBeaconID(beaconId);
+            viewIntent.putExtra(MainActivity.ROOM_ID, room.getId());
+
+            PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this)
