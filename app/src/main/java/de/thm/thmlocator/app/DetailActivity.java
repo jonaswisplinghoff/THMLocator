@@ -1,20 +1,29 @@
 package de.thm.thmlocator.app;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.Date;
+
+import de.thm.thmlocator.app.Entity.Event;
 import de.thm.thmlocator.app.Entity.Room;
 
 
 public class DetailActivity extends Activity {
     Room myRoom;
-    TextView roomName;
-    ImageView teacher;
+    TextView textViewRoomName, textViewEventType, textViewEventName, textViewCourseOfStudies, textViewTeacherName;
+    ImageView imageViewCoverImage;
+    ImageButton imageButtonTeacher;
+    Button buttonARSnova;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +31,14 @@ public class DetailActivity extends Activity {
         setContentView(R.layout.activity_detail);
 
         //Get Views from runtime
-        roomName = (TextView) findViewById(R.id.textViewRoomName);
-        teacher = (ImageView) findViewById(R.id.imageButtonTeacher);
+        textViewRoomName = (TextView) findViewById(R.id.textViewRoomName);
+        imageButtonTeacher = (ImageButton) findViewById(R.id.imageButtonTeacher);
+        textViewEventType = (TextView) findViewById(R.id.textViewEventType);
+        textViewEventName = (TextView) findViewById(R.id.textViewEventName);
+        textViewCourseOfStudies = (TextView) findViewById(R.id.textViewCourseOfStudies);
+        textViewTeacherName = (TextView) findViewById(R.id.textViewTeacherName);
+        imageViewCoverImage = (ImageView) findViewById(R.id.imageViewCoverImage);
+        buttonARSnova = (Button) findViewById(R.id.buttonARSnova);
 
         int roomId =  getIntent().getIntExtra(MainActivity.ROOM_ID, 0);
 
@@ -31,8 +46,22 @@ public class DetailActivity extends Activity {
 
         if(myRoom != null) {
 
-            roomName.setText(myRoom.getRoomName());
-            teacher.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            textViewRoomName.setText(myRoom.getRoomName());
+            imageViewCoverImage.setImageBitmap(myRoom.getRoomPicture());
+            final Event currentEvent = myRoom.getEventByTime(new Date());
+            if(currentEvent != null) {
+                textViewEventType.setText(currentEvent.getEventType());
+                textViewEventName.setText(currentEvent.getEventName());
+                textViewCourseOfStudies.setText(currentEvent.getCourse());
+                textViewTeacherName.setText(currentEvent.getEventProf());
+                buttonARSnova.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(DetailActivity.this, currentEvent.getArsnovaURL(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            imageButtonTeacher.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     if (b) {
