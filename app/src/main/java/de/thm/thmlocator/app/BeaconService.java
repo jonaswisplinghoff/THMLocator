@@ -1,5 +1,6 @@
 package de.thm.thmlocator.app;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -140,12 +141,29 @@ public class BeaconService extends Service implements IBeaconConsumer {
                             .setContentText(currentRoom.getEventByTime(new Date()).getEventName())
                             .setContentIntent(viewPendingIntent);
 
+            NotificationCompat.BigTextStyle secondPageStyle = new NotificationCompat.BigTextStyle();
+            secondPageStyle.setBigContentTitle(currentRoom.getEventByTime(new Date()).getEventName())
+                    .bigText(currentRoom.getEventByTime(new Date()).getEventProf());
+
+            Notification secondPageNotification =
+                    new NotificationCompat.Builder(this)
+                            .setStyle(secondPageStyle)
+                            .build();
+
+
+            Notification twoPageNotification =
+                    new NotificationCompat.WearableExtender()
+                            .addPage(secondPageNotification)
+                            .extend(notificationBuilder)
+                            .build();
+
+
             // Get an instance of the NotificationManager service
             NotificationManagerCompat notificationManager =
                     NotificationManagerCompat.from(this);
 
             // Build the notification and issues it with notification manager.
-            notificationManager.notify(notificationId, notificationBuilder.build());
+            notificationManager.notify(notificationId, twoPageNotification);
         }
     }
 }
