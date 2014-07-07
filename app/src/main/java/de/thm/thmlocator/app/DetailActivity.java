@@ -1,8 +1,11 @@
 package de.thm.thmlocator.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +27,7 @@ public class DetailActivity extends Activity {
     TextView textViewRoomName, textViewEventType, textViewEventName, textViewCourseOfStudies, textViewTeacherName;
     ImageView imageViewCoverImage;
     ImageButton imageButtonTeacher;
-    Button buttonARSnova;
+    Button buttonARSnova, buttonEmail, buttonMoodle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class DetailActivity extends Activity {
         textViewTeacherName = (TextView) findViewById(R.id.textViewTeacherName);
         imageViewCoverImage = (ImageView) findViewById(R.id.imageViewCoverImage);
         buttonARSnova = (Button) findViewById(R.id.buttonARSnova);
+        buttonEmail = (Button) findViewById(R.id.buttonEmail);
+        buttonMoodle = (Button) findViewById(R.id.buttonMoodleKurs);
 
         int roomId =  getIntent().getIntExtra(MainActivity.ROOM_ID, 0);
 
@@ -50,7 +55,7 @@ public class DetailActivity extends Activity {
             textViewRoomName.setText(myRoom.getRoomName());
             Bitmap myCoverPicture = myRoom.getRoomPicture();
             if(myCoverPicture != null) {
-                imageViewCoverImage.setImageBitmap(myRoom.getRoomPicture());
+                imageViewCoverImage.setImageBitmap(myCoverPicture);
             }
             final Event currentEvent = myRoom.getEventByTime(new Date());
             if(currentEvent != null) {
@@ -61,10 +66,42 @@ public class DetailActivity extends Activity {
                 buttonARSnova.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(DetailActivity.this, currentEvent.getArsnovaURL(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(DetailActivity.this, currentEvent.getArsnovaURL(), Toast.LENGTH_LONG).show();
+                        Intent newIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(currentEvent.getArsnovaURL()));
+                        startActivity(newIntent);
                     }
                 });
+
+                buttonEmail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Toast.makeText(DetailActivity.this, currentEvent.getArsnovaURL(), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/html");
+                        intent.putExtra(Intent.EXTRA_EMAIL, currentEvent.getContactMail());
+                        intent.putExtra(Intent.EXTRA_SUBJECT, currentEvent.getEventName());
+                        intent.putExtra(Intent.EXTRA_TEXT, "Dear "+currentEvent.getEventProf()+",\n");
+                        startActivity(Intent.createChooser(intent, "Send Email"));
+                    }
+                });
+
+
+                buttonMoodle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Toast.makeText(DetailActivity.this, currentEvent.getArsnovaURL(), Toast.LENGTH_LONG).show();
+                        Intent newIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(currentEvent.getMoodleCourse()));
+                        startActivity(newIntent);
+                    }
+                });
+
+
+
             }
+
+
             imageButtonTeacher.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
@@ -94,9 +131,7 @@ public class DetailActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 

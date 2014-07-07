@@ -4,6 +4,10 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
@@ -131,7 +135,7 @@ public class BeaconService extends Service implements IBeaconConsumer {
             viewIntent.putExtra(MainActivity.ROOM_ID, room.getId());
 
             PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+            currentRoom.getRoomPicture();
 
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this)

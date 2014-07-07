@@ -12,6 +12,8 @@ public class Event implements Serializable {
 
     private String eventName;
     private String eventProf;
+    private String contactMail;
+    private String moodleCourse;
     private Date startDate;
     private Date endDate;
     private int eventDurationMinutes;
@@ -19,12 +21,14 @@ public class Event implements Serializable {
     private String eventType;
     private String course;
 
-    public Event(String eventName, String eventProf, Date startDate,
+    public Event(String eventName, String eventProf, String contactMail,String moodleCourse, Date startDate,
                  Date endDate, int eventDurationMinutes, String arsnovaURL,
                  String eventType, String course) {
         super();
         this.eventName = eventName;
         this.eventProf = eventProf;
+        this.contactMail = contactMail;
+        this.moodleCourse = moodleCourse;
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventDurationMinutes = eventDurationMinutes;
@@ -50,6 +54,18 @@ public class Event implements Serializable {
     }
     public void setArsnovaURL(String arsnovaURL) {
         this.arsnovaURL = arsnovaURL;
+    }
+    public String getContactMail() {
+        return contactMail;
+    }
+    public void setContactMail(String contactMail) {
+        this.contactMail = contactMail;
+    }
+    public String getMoodleCourse() {
+        return moodleCourse;
+    }
+    public void setMoodleCourse(String moodleCourse) {
+        this.moodleCourse = moodleCourse;
     }
     public String getEventType() {
         return eventType;

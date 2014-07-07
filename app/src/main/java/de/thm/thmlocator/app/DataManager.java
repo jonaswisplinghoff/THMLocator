@@ -6,10 +6,13 @@ package de.thm.thmlocator.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.util.Base64;
 
 import com.radiusnetworks.ibeacon.IBeacon;
 
@@ -141,13 +144,17 @@ public class DataManager {
             e.printStackTrace();
         }
 
-        Event e1 = new Event("FMI", "Prof. Dr. Dominik Schultes", startDate, endDate, 120, "www.arsnovatabak.de", "Vorlesung", "Medieninformatik M. Sc.");
+        Event e1 = new Event("FMI", "Prof. Dr. Dominik Schultes", "dominik.schultes@iem.thm.de","https://moodle.thm.de/course/view.php?id=1420", startDate, endDate, 120, "https://arsnova.eu/mobile/#id/77201101", "Vorlesung", "Medieninformatik M. Sc.");
         events.add(e1);
 
         //Bitmap testBild = BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.raum_test);
-        Room r1 = new Room(1, UUID.fromString("73676723-7400-0000-ffff-0000ffff0000"), "H001", events);
+        Room r1 = new Room(1, UUID.fromString("73676723-7400-0000-ffff-0000ffff0000"), "H0101", events);
         Room r2 = new Room(2, UUID.fromString("73676723-7400-0000-ffff-0000ffff0001"), "J.03.27c", events);
         Room r3 = new Room(3, UUID.fromString("73676723-7400-0000-ffff-0000ffff0002"), "J.03.25b", events);
+
+        r1.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_h0101));
+        r2.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_j0327c));
+        r2.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_j0325b));
 
         rooms.add(r1);
         rooms.add(r2);
