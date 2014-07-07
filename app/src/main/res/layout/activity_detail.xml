@@ -24,6 +24,15 @@
         android:src="@drawable/gradient_detail"
         android:layout_alignParentEnd="true" />
 
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        android:layout_alignBottom="@id/imageViewCoverImage"
+        android:src="@color/thm_green"
+        android:id="@+id/imageView" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,47 +42,50 @@
         android:layout_marginTop="138dp"
         android:id="@+id/imageView3" />
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="5dp"
-        android:layout_alignBottom="@id/imageViewCoverImage"
-        android:src="@color/thm_green"
-        android:id="@+id/imageView" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAlignment="center"
+        android:text="Large Text"
+        android:id="@+id/textViewRoomName"
+        android:layout_below="@+id/textViewEventName"
+        android:singleLine="true"
+        android:layout_alignLeft="@+id/imageView3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large TextTextText"
         android:id="@+id/textViewEventType"
         android:textColor="#ffffff"
         android:layout_alignTop="@+id/imageView3"
-        android:layout_toLeftOf="@+id/textViewTeacherName"
         android:layout_alignLeft="@+id/textViewEventName"
-        android:singleLine="true" />
+        android:singleLine="true"
+       />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium TextMedium TextMedium Text"
         android:id="@+id/textViewEventName"
         android:textColor="#ffffff"
         android:layout_below="@+id/textViewEventType"
-        android:layout_alignParentStart="true"
         android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@+id/textViewTeacherName"
         android:singleLine="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/textViewCourseOfStudies"
-        android:layout_alignStart="@+id/textViewEventName"
         android:layout_below="@+id/imageView"
-        android:layout_alignRight="@+id/textViewEventName"
         android:singleLine="true" />
 
     <Button
@@ -94,22 +106,9 @@
         android:layout_centerHorizontal="true"
         android:clickable="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textAlignment="center"
-        android:text="Large Text"
-        android:id="@+id/textViewRoomName"
-        android:layout_below="@+id/textViewEventName"
-        android:layout_alignParentEnd="true"
-        android:singleLine="true"
-        android:layout_alignLeft="@+id/imageView3"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
@@ -117,6 +116,6 @@
         android:singleLine="true"
         android:layout_alignTop="@+id/imageButtonTeacher"
         android:layout_alignRight="@+id/imageButtonTeacher"
-        android:layout_marginRight="32dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="41dp" />
 </RelativeLayout>

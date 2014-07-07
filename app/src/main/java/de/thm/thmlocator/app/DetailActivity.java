@@ -1,6 +1,7 @@
 package de.thm.thmlocator.app;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
@@ -47,7 +48,10 @@ public class DetailActivity extends Activity {
         if(myRoom != null) {
 
             textViewRoomName.setText(myRoom.getRoomName());
-            imageViewCoverImage.setImageBitmap(myRoom.getRoomPicture());
+            Bitmap myCoverPicture = myRoom.getRoomPicture();
+            if(myCoverPicture != null) {
+                imageViewCoverImage.setImageBitmap(myRoom.getRoomPicture());
+            }
             final Event currentEvent = myRoom.getEventByTime(new Date());
             if(currentEvent != null) {
                 textViewEventType.setText(currentEvent.getEventType());
