@@ -132,7 +132,7 @@ public class DataManager {
 
     public static void createTestData(Context ctxt){
         ArrayList<Room> rooms = new ArrayList<Room>();
-        ArrayList<Event> events = new ArrayList<Event>();
+        ArrayList<Event> events1 = new ArrayList<Event>();
 
         DateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
         Date startDate = null;
@@ -143,14 +143,31 @@ public class DataManager {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         Event e1 = new Event("FMI", "Prof. Dr. Dominik Schultes", "dominik.schultes@iem.thm.de","https://moodle.thm.de/course/view.php?id=1420", startDate, endDate, 120, "https://arsnova.eu/mobile/#id/77201101", "Vorlesung", "Medieninformatik M. Sc.");
-        events.add(e1);
+        events1.add(e1);
+        Room r1 = new Room(1, UUID.fromString("73676723-7400-0000-ffff-0000ffff0000"), "H0101", events1);
 
-        //Bitmap testBild = BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.raum_test);
-        Room r1 = new Room(1, UUID.fromString("73676723-7400-0000-ffff-0000ffff0000"), "H0101", events);
-        Room r2 = new Room(2, UUID.fromString("73676723-7400-0000-ffff-0000ffff0001"), "J.03.27c", events);
-        Room r3 = new Room(3, UUID.fromString("73676723-7400-0000-ffff-0000ffff0002"), "J.03.25b", events);
+        ArrayList<Event> events2 = new ArrayList<Event>();
+        try {
+            startDate = formatter.parse("30/06/2014 18:00");
+            endDate = formatter.parse("25/07/2014 20:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Event e2 = new Event("AV", "Prof. Dr. Stephan Euler", "Stephan.Euler@mnd.thm.de","https://moodle.thm.de/enrol/index.php?id=3", startDate, endDate, 120, "https://arsnova.eu/mobile/#id/55873503", "Übung", "Medieninformatik B. Sc.");
+        events2.add(e2);
+        Room r2 = new Room(2, UUID.fromString("73676723-7400-0000-ffff-0000ffff0001"), "J.03.27c", events2);
+
+        ArrayList<Event> events3 = new ArrayList<Event>();
+        try {
+            startDate = formatter.parse("30/06/2014 18:00");
+            endDate = formatter.parse("25/07/2014 20:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Event e3 = new Event("RIV", "Benjamin Rupp", "benjamin.rupp@iem.thm.de","https://moodle.thm.de/enrol/index.php?id=115", startDate, endDate, 120, "https://arsnova.eu/mobile/#id/46628624", "Praktikum", "Medieninformatik B. Sc.");
+        events3.add(e3);
+        Room r3 = new Room(3, UUID.fromString("73676723-7400-0000-ffff-0000ffff0002"), "J.03.25b", events3);
 
         r1.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_h0101));
         r2.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_j0327c));
