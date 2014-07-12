@@ -169,6 +169,7 @@ public class DataManager {
         events3.add(e3);
         Room r3 = new Room(3, UUID.fromString("73676723-7400-0000-ffff-0000ffff0002"), "J.03.25b", events3);
 
+
         r1.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_h0101));
         r2.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_j0327c));
         r2.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_j0325b));
