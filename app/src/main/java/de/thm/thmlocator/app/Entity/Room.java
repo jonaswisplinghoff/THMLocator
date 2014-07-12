@@ -25,7 +25,7 @@ public class Room implements Serializable {
         super();
         this.id = id;
         this.beaconID = beaconID;
-        //this.roomPicture = roomPicture;
+        this.roomPicture = null;
         this.roomName = roomName;
         this.roomEvents = roomEvents;
     }
