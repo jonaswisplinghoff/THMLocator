@@ -170,9 +170,9 @@ public class DataManager {
         Room r3 = new Room(3, UUID.fromString("73676723-7400-0000-ffff-0000ffff0002"), "J.03.25b", events3);
 
 
-        r1.setRoomPicture(BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.room_h0101));
-        r2.setRoomPicture(BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.room_j0327c));
-        r3.setRoomPicture(BitmapFactory.decodeResource(ctxt.getResources(), R.drawable.room_j0325b));
+        r1.setRoomPicture(StaticLib.getBitmapFromDrawableId(ctxt, R.drawable.room_h0101));
+        r2.setRoomPicture(StaticLib.getBitmapFromDrawableId(ctxt, R.drawable.room_j0327c));
+        r3.setRoomPicture(StaticLib.getBitmapFromDrawableId(ctxt, R.drawable.room_j0325b));
 
         rooms.add(r1);
         rooms.add(r2);
@@ -180,5 +180,7 @@ public class DataManager {
 
         setRooms(rooms);
     }
+
+
 }
 
