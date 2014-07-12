@@ -6,17 +6,21 @@ package de.thm.thmlocator.app.Entity;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.Serializable;
 import java.util.UUID;
 
+import de.thm.thmlocator.app.StaticLib;
+
 public class Room implements Serializable {
 
     private int id;
     private UUID beaconID;
-    private Bitmap roomPicture;
+    private String roomPicture;
     private String roomName;
     private ArrayList<Event> roomEvents;
 
@@ -37,10 +41,11 @@ public class Room implements Serializable {
         this.id = id;
     }
     public Bitmap getRoomPicture() {
-        return roomPicture;
+        return StaticLib.decodeBase64(this.roomPicture);
     }
     public void setRoomPicture(Bitmap roomPicture) {
-        this.roomPicture = roomPicture;
+        this.roomPicture = StaticLib.encodeTobase64(roomPicture);
+
     }
     public String getRoomName() {
         return roomName;
