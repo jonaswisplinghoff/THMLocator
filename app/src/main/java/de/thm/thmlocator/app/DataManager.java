@@ -171,7 +171,7 @@ public class DataManager {
 
         r1.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_h0101));
         r2.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_j0327c));
-        r2.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_j0325b));
+        r3.setRoomPicture(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.room_j0325b));
 
         rooms.add(r1);
         rooms.add(r2);
